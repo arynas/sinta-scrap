@@ -52,8 +52,7 @@ def get_publications(papers, university_id, university_name, page_site):
                " berhasil disimpan!"
 
         logging.info(text)
-        bot.sendMessage(chat_id=chat_id,
-                        text=text)
+        # bot.sendMessage(chat_id=chat_id,text=text)
 
 def request_publication(page_site, university_id):
     page = requests.get(
@@ -74,7 +73,7 @@ def main(university_checkpoint=None):
 
                 try:
                     papers = request_publication(i, university['id'])
-                except ConnectionError as e:
+                except ValueError as e:
                     logging.info(str(e))
                     bot.sendMessage(chat_id=chat_id,
                                     text=str(e))
