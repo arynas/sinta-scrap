@@ -3,8 +3,6 @@ import time
 import config
 import requests
 import telegram
-import logging
-logging.basicConfig(level=logging.INFO)
 from bs4 import BeautifulSoup
 from pymongo import MongoClient
 
@@ -51,7 +49,7 @@ def get_publications(papers, university_id, university_name, page_site):
                "' pada halaman ke-" + str(page_site) + \
                " berhasil disimpan!"
 
-        logging.info(text)
+        print(text)
         bot.sendMessage(chat_id=chat_id,
                         text=text)
 
@@ -75,7 +73,7 @@ def main(university_checkpoint=None):
                 try:
                     papers = request_publication(i, university['id'])
                 except ConnectionError as e:
-                    logging.info(str(e))
+                    print(str(e))
                     bot.sendMessage(chat_id=chat_id,
                                     text=str(e))
                     time.sleep(60)
@@ -83,7 +81,7 @@ def main(university_checkpoint=None):
 
                 if len(papers) == 0:
                     text = "Semua data publikasi dari universitas '" + university['name'] + "' telah tersimpan!"
-                    logging.info(text)
+                    print(text)
                     bot.sendMessage(chat_id=chat_id,
                                     text=text)
                     university_saved.append(university['id'])
