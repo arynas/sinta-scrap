@@ -1,5 +1,6 @@
 import sys
 import time
+import config
 import requests
 import telegram
 from bs4 import BeautifulSoup
@@ -8,7 +9,7 @@ from pymongo import MongoClient
 bot = telegram.Bot(token='1195345949:AAFBrpXe-tpqgSs0AXmMwVINTUjVf2Z-V-A')
 chat_id = '-1001469033921'
 
-client = MongoClient()
+client = MongoClient(config.host, username=config.username,  password=config.password)
 db = client.sinta
 col_google_scholars = db.google_scholars
 col_universities = db.universities
