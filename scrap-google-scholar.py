@@ -90,8 +90,8 @@ def main(university_checkpoint=None):
 
                 get_publications(papers, university['id'], university['name'], i)
 
-                text = "Publikasi dari '" + university_name + \
-                       "' pada halaman ke-" + str(page_site) + \
+                text = "Publikasi dari '" + university['name'] + \
+                       "' pada halaman ke-" + str(i) + \
                        " berhasil disimpan!"
 
                 bot.sendMessage(chat_id=chat_id, text=text)
