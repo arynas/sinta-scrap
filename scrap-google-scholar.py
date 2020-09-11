@@ -36,14 +36,14 @@ def get_publications(papers, university_id, university_name, page_site):
                 authors.append(cleansing_authors(dd.text.strip().split(", ")))
             else:
                 publisher.append(dd.text.strip())
-
         col_google_scholars.insert_one({
             'university_id': university_id,
             'title': link.text,
             'link': link['href'],
-            'authors': authors[0],
-            'publisher': publisher[0],
-            'citation': paper.find_all("td", class_="index-val uk-text-center")[1].text,
+            'authors': '' if len(authors) == 0 else authors[0],
+            'publisher': '' if len(publisher) == 0 else publisher[0],
+            'citation': '' if len(paper.find_all("td", class_="index-val uk-text-center")) < 2 else
+                            paper.find_all("td", class_="index-val uk-text-center")[1].text
         })
 
         text = "Publikasi dengan judul '" + link.text + \
