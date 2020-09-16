@@ -87,8 +87,8 @@ def main():
                     page_saved.append(0)
                     text = "Semua data publikasi dari universitas '" + university['name'] + "' telah tersimpan!"
                     logging.info(text)
-                    # bot.sendMessage(chat_id=chat_id,
-                    #                 text=text)
+                    bot.sendMessage(chat_id=chat_id,
+                                    text=text)
                     break
 
                 get_publications(papers, university['id'], university['name'], i)
@@ -97,6 +97,6 @@ def main():
                        "' pada halaman ke-" + str(i) + \
                        " berhasil disimpan!"
 
-                # bot.sendMessage(chat_id=chat_id, text=text)
+                bot.sendMessage(chat_id=chat_id, text=text)
 if __name__ == "__main__":
     main()
