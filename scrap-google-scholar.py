@@ -15,9 +15,9 @@ client = MongoClient(config.host, username=config.username,  password=config.pas
 db = client.sinta
 col_google_scholars = db.google_scholars
 col_universities = db.universities
+col_university_checkpoint = db.university_checkpoint
 
-university_saved = []
-page_saved = [0]
+page_saved = [16]
 
 def cleansing_authors(authors):
     if authors[-1] == '...':
@@ -63,9 +63,10 @@ def request_publication(page_site, university_id):
 
     return papers
 
-def main(university_checkpoint=None):
+def main():
     for university in col_universities.find():
-        if university_checkpoint not in university_saved:
+        check_univ = col_university_checkpoint.find_one({'university_id': university['id']})
+        if check_univ == None:
             i = page_saved[-1]
             while True:
                 i += 1
@@ -80,12 +81,14 @@ def main(university_checkpoint=None):
                     main(university['id'])
 
                 if len(papers) == 0:
+                    col_university_checkpoint.insert_one({
+                        'university_id': university['id']
+                    })
+                    page_saved.append(0)
                     text = "Semua data publikasi dari universitas '" + university['name'] + "' telah tersimpan!"
                     logging.info(text)
-                    bot.sendMessage(chat_id=chat_id,
-                                    text=text)
-                    university_saved.append(university['id'])
-                    page_saved.append(0)
+                    # bot.sendMessage(chat_id=chat_id,
+                    #                 text=text)
                     break
 
                 get_publications(papers, university['id'], university['name'], i)
@@ -94,6 +97,6 @@ def main(university_checkpoint=None):
                        "' pada halaman ke-" + str(i) + \
                        " berhasil disimpan!"
 
-                bot.sendMessage(chat_id=chat_id, text=text)
+                # bot.sendMessage(chat_id=chat_id, text=text)
 if __name__ == "__main__":
     main()
