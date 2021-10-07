@@ -8,8 +8,8 @@ logging.basicConfig(level=logging.INFO)
 from bs4 import BeautifulSoup
 from pymongo import MongoClient
 
-bot = telegram.Bot(token='1195345949:AAFBrpXe-tpqgSs0AXmMwVINTUjVf2Z-V-A')
-chat_id = '-1001469033921'
+bot = telegram.Bot(token='YOURTELEGRAMTOKEN')
+chat_id = 'YOURCHATID'
 
 client = MongoClient(config.host, username=config.username,  password=config.password)
 db = client.sinta
